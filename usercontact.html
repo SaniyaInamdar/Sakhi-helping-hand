@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="icon" href="img/favicon2.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: url('img/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+
+        /* Navbar */
+        header {
+            background-color: #467aaf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 25px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        header nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border: 1px solid white;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header nav a:hover {
+            background-color: white;
+            color: #467aaf;
+        }
+
+        /* Contact Section Styling */
+        .contact-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.326); /* Set a transparent white background */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+        }
+        
+
+        .contact-container {
+            width: 50%;
+            padding: 30px;
+        }
+
+        .contact-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #e7ebee;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #467aaf;
+            outline: none;
+            box-shadow: 0 0 5px rgba(70, 122, 175, 0.5);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Submit and Clear buttons */
+        .buttons-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .submit-btn,
+        .clear-btn {
+            background-color: #467aaf;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover,
+        .clear-btn:hover {
+            background-color: #365d8b;
+        }
+
+        /* Modal (Popup) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 100px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Close button */
+        .modal .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .modal .close:hover,
+        .modal .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            background-color: #467aaf;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .contact-section {
+                flex-direction: column;
+            }
+
+            .contact-container,
+            .contact-image {
+                width: 100%;
+            }
+        }
+
+        /* Style the contact image */
+        .contact-image img {
+            width: 100%;
+            height: auto;
+            max-width: 550px;  /* Adjust the image width as needed */
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="logo">
+            <img src="img/LogoDash.png" alt="Sakhee Logo">
+            <h1>Contact Form</h1>
+        </div>
+        <nav>
+            <a href="userhomepage.html">Home</a>
+            <a href="Login.html">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Contact Section -->
+    <div id="contact-form" class="contact-section">
+        <!-- Contact Form -->
+        <div class="contact-container">
+            <h2>We'd Love to Hear From You!</h2>
+            <form action="#" method="POST">
+                <!-- Name -->
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user icon"></i> Your Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope icon"></i> Your Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <!-- Subject -->
+                <div class="form-group">
+                    <label for="subject"><i class="fas fa-clipboard-list icon"></i> Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Subject of your inquiry" required>
+                </div>
+
+                <!-- Message -->
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment-dots icon"></i> Your Message</label>
+                    <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="buttons-container">
+                    <button type="submit" class="submit-btn" onclick="showModal(event)">Send Message</button>
+                    <button type="reset" class="clear-btn">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Contact Image -->
+        <div class="contact-image">
+            <img src="img/contact-image.jpg" alt="Contact Us Image">
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Form Submitted! We Will Get Back to You Soon</h3>
+        </div>
+    </div>
+
+    <script>
+        // Show the modal when the Submit button is clicked
+        function showModal(event) {
+            event.preventDefault();  // Prevent form submission to keep the modal open
+            document.getElementById("contactModal").style.display = "block";
+        }
+
+        // Close the modal when the close button is clicked
+        function closeModal() {
+            document.getElementById("contactModal").style.display = "none";
+        }
+
+        // Close the modal if the user clicks outside the modal
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("contactModal")) {
+                document.getElementById("contactModal").style.display = "none";
+            }
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Sakhee. All rights reserved.
+    </footer>
+
+</body>
+</html>

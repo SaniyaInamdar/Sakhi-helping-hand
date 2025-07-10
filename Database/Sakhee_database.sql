@@ -1,0 +1,38 @@
+use sakhee_database;
+select * from tbl_employee;
+insert into tbl_employee values(4,'G','MA','Therapist','2 year','3456767676','G@Gmail.Com','G123');
+select * from tbl_user;
+Show tables;
+select * from tbl_service;
+drop table tbl_service;
+create table tbl_service(srid int,service_type varchar(100),service_name varchar(100),service_title varchar(100),service_description varchar(200),service_rule varchar(200),service_duration varchar(200),service_amoount int);
+insert into tbl_service values(1,'Home Services','Loundry Service','Loundry Service','Providing loundry services charges as per cloth will be calculated','Loundry Services','Required 2 hours',200);
+insert into tbl_service values(2,'Home Services','Maid','Maid','Providing maid services charges as per hours it will be calculated','Maid Services','service available after 24 hours',200);
+select * from tbl_service;
+insert into tbl_service values(3,'Child Care','baby care taker','baby care taker','baby care taker charges as per hour will be calculated ','booking before 2 hours','providing 24 hours','350');
+insert into tbl_service values(4,'Personal Care','Massage Therapy','Massage Therapy','full body massage therapy','booking before 2 hours','providing 24 hours','1050');
+create table tbl_booking(book_id int,cid int,cust_email varchar(50),bookdate varchar(100),serid int,sername varchar(100),amount int);  
+select * from tbl_booking;
+ insert into tbl_booking values(1,1,'a@gmail.com','10-feb-2025',1,'Maid',350);
+ create table tbl_payment(payid int,paydate varchar(50),cid int,cname varchar(100),bookid int,paymode varchar(50),payamt int,servicename varchar(100));
+insert into tbl_payment values(100101,'27-02-2025',1,'a@gmail.com',1,'QRCODE',350,'Maid');
+alter table tbl_booking add bookstatus varchar(10);
+  update tbl_booking set bookstatus='Pending' where cid=1;
+   select * from tbl_booking;
+    insert into tbl_booking values(2,2,'a@gmail.com','10-feb-2025',1,'Maid',350,'Pending');
+    select * from tbl_employee;
+    Select * from tbl_payment;
+    create table tbl_complaint(compid int,compdate varchar(50),cid int,cust_email varchar(100),comp_desr varchar(200));
+ create table tbl_feedback(feedid int,feeddate varchar(200),feed_desc varchar(200));
+    select * from tbl_feedback;
+    Select * from tbl_booking;
+    select * from tbl_service;
+        desc tbl_booking;
+alter table tbl_booking modify serid  varchar(10);
+desc tbl_booking;
+desc tbl_payment;
+select * from tbl_service where service_title='Massage Therapy';
+desc tbl_user;
+insert into tbl_employee values(5,'sa','ba','Maid','1 year','5842332565','sa@gmail.com','sa123');
+    
+    

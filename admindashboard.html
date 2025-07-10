@@ -1,0 +1,1996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sakhee</title>
+    <link rel="icon" href="img/favicon2.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/admin-dashboard.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #467aaf;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #467aaf;
+            color: white;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .logo img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 20px;
+            font-size: 18px;
+            border-bottom: 1px solid #467aaf;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #343fda;
+        }
+
+        .sidebar ul li i {
+            margin-right: 10px;
+        }
+
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(64, 140, 248, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #467aaf;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #343fda;
+        }
+
+        .dynamic-content {
+            display: none;
+        }
+
+        .employee-table th, .employee-table td,
+        .service-table th, .service-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .employee-table th, .service-table th {
+            background-color: #467aaf;
+            color: white;
+        }
+
+        .employee-table tr:hover, .service-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .delete-btn {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff3b3b;
+        }
+        .dynamic-content {
+            display: none;
+        }
+
+        .booking-table th, .booking-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .booking-table th {
+            background-color: #467aaf;
+            color: white;
+        }
+
+        .booking-table tr:hover {
+            background-color: #f1f1f1;
+        }
+       
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+            }
+        
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+                max-width: 600px;
+            }
+        
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+        
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Payment Table Styling */
+#paymentManagementContent table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#paymentManagementContent th, #paymentManagementContent td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Header styling */
+#paymentManagementContent th {
+    background-color: #467aaf;
+    color: white;
+    font-size: 16px;
+}
+
+/* Row hover effect */
+#paymentManagementContent tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Even row styling */
+#paymentManagementContent tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Even row hover effect */
+#paymentManagementContent tr:nth-child(even):hover {
+    background-color: #f1f1f1;
+}
+
+/* Odd row styling */
+#paymentManagementContent tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Table cell text */
+#paymentManagementContent td {
+    font-size: 14px;
+    color: #333;
+}
+
+  /* Form Container Styling */
+#paymentForm {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+#paymentForm label {
+    font-size: 16px;
+    color: #555;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+#paymentForm input,
+#paymentForm select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #333;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+#paymentForm input:focus,
+#paymentForm select:focus {
+    border-color: #467aaf;
+    background-color: #fff;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-clear {
+    background-color: #6c757d; /* Grey color for clear button */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker blue for hover effect */
+}
+
+.btn-clear:hover {
+    background-color: #5a6268; /* Darker grey for clear button hover effect */
+}
+
+.btn:active {
+    transform: scale(0.95); /* Slight click effect */
+}
+
+.btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Button Container */
+#paymentForm .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px; /* Space above buttons */
+}
+
+/* Button Styling */
+#paymentForm button {
+    padding: 8px 16px; /* Smaller padding */
+    font-size: 14px; /* Smaller font size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 48%; /* Take up almost half of the form width */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#paymentForm button[type="submit"] {
+    background-color: #467aaf;
+    color: white;
+}
+
+#paymentForm button[type="reset"] {
+    background-color: #467aaf;
+    color: white;
+}
+
+/* Button Hover Effects */
+#paymentForm button:hover {
+    transform: scale(1.05);
+}
+
+#paymentForm button[type="submit"]:hover {
+    background-color: #343fda;
+}
+
+#paymentForm button[type="reset"]:hover {
+    background-color: #343fda;
+}
+
+
+#filterOptions button {
+    margin: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+#filterOptions button:hover {
+    background-color: #0056b3;
+}
+
+#paymentTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#paymentTable th, #paymentTable td {
+    border: 1px solid #0056b3;
+    padding: 10px;
+    text-align: left;
+}
+
+#paymentTable th {
+    background-color: #467aaf;
+}
+
+
+
+/* Form Responsive Design */
+@media (max-width: 768px) {
+    #paymentForm {
+        width: 90%;
+        padding: 20px;
+    }
+
+    #paymentForm button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+#handleComplaintsContent {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h4 {
+    margin-top: 20px;
+    color: #333;
+    font-size: 1.2em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color:#467aaf;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.pending {
+    color: #467aaf
+   
+}
+
+.resolved {
+    color: #467aaf;
+    font-weight: bold;
+}
+.tab-container {
+    margin-bottom: 1em;
+}
+
+.tab-btn {
+    padding: 10px 15px;
+    border: none;
+    background-color: #007BFF;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.tab-btn.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+.employee-table th, .employee-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.assign-btn {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.status-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.status-btn:hover:not([disabled]) {
+    background-color: #45a049;
+}
+
+.status-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+        /* Styling for the Generate Report Section */
+#generateReportSection {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#generateReportSection h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.card {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+button[type="submit"], button[type="reset"] {
+    margin-right: 10px;
+}
+
+
+/* Styling for the Generate Report Section */
+#generateReportSection {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#generateReportSection h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+.card {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+button[type="submit"], button[type="reset"] {
+    margin-right: 10px;
+}
+
+/* Styling for the Service Report Table */
+.service-report-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.service-report-table th, .service-report-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.service-report-table th {
+    background-color: #f4f4f4;
+}
+
+/* Styling for the Download button */
+.download-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background-color: #45a049;
+}
+
+
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Table Styles */
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.employee-table th, .employee-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.view-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.view-btn:hover {
+    background-color: #45a049;
+}
+
+  
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="img/LogoDash.png" alt="Sakhee Logo">
+        <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Admin Dashboard</h1>
+    </div>
+    <div class="logout">
+        <a href="Login.html" style="color: white; text-decoration: none; padding: 10px 15px; border: 1px solid white; border-radius: 5px;">Logout</a>
+    </div>
+</header>
+
+<div class="sidebar">
+    <div class="logo">
+        <img src="img/LogoDash.png" alt="Sakhee Logo">
+    </div>
+    <ul>
+        <li id="updateServices"><i class="fa fa-pencil"></i> Update Services</li>
+        <li id="manageEmployees"><i class="fa fa-users"></i> Manage Employees</li>
+        <li id="viewBookings"><i class="fa fa-eye"></i> View Bookings</li>
+        <li id="paymentManagement"><i class="fa fa-credit-card"></i> Payment Management</li>
+        <li id="handleComplaints"><i class="fa fa-comments"></i> Handle Complaints</li>
+   
+        <li id="viewContactUsForms"><i class="fa fa-folder-open"></i> View Contact Us Forms</li>
+        <li id="viewAppliedJob"><i class="fa fa-briefcase"></i> View Applied Job</li>
+        <li id="viewReports"><i class="fa fa-file"></i> View Reports</li>
+        
+    </ul>
+</div>
+
+<div class="content">
+    <h2 id="welcomeMessage">Welcome, Admin!</h2>
+
+    <div id="updateServicesContent" class="dynamic-content">
+        <!-- <h3>Update Service</h3> -->
+        <div class="card">
+            <h3>Service Details</h3>
+            <form action="UpdateServiceServlet" method="post">
+                <div class="form-group">
+                    <label for="serviceAction">Action</label>
+                    <select id="serviceAction" name="serviceAction" class="form-control" onchange="toggleFields()">
+                        <option value="add">Add New Service</option>
+                        <option value="update">Update Existing Service</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="serviceIdDiv" style="display: none;">
+                    <label for="serviceId">Service ID (for Update/Delete)</label>
+                    <select id="serviceId" name="serviceId" class="form-control">
+                        <!-- Add options dynamically when backend is implemented -->
+                        <option value="1">House Cleaning</option>
+                        <option value="2">Meal Preparation</option>
+                        <option value="3">laundry Service</option>
+                        <option value="4">Maid Service</option>
+                        <option value="5">Chopped Vegetable</option>
+                        <option value="6">Child care</option>
+                        <option value="7">Elder Care</option>
+                        <option value="8">Education Support</option>
+                        <option value="9">Emergency Care</option>
+                        <option value="10">Verified CareGivers</option>
+                        <option value="11">Massage Therapy</option>
+                        <option value="12">Beauty Treatment</option>
+                        <option value="13">Maid Service</option>
+                        <option value="14">Chopped Vegetable</option>
+                        <option value="15">Fitness Coaching</option>
+                        <option value="16">Spa Service</option>
+                        <option value="17">Learning</option>
+    
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="serviceName">Service Name</label>
+                    <input type="text" id="serviceName" name="serviceName" class="form-control" placeholder="Enter service name" required />
+                </div>
+                <div class="form-group">
+                    <label for="serviceDescription">Service Description</label>
+                    <textarea id="serviceDescription" name="serviceDescription" class="form-control" rows="4" placeholder="Enter service description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="servicePrice">Service Price </label>
+                    <input type="number" id="servicePrice" name="servicePrice" class="form-control" placeholder="Enter service price" required />
+                </div>
+
+
+                <div class="form-group">
+                    <label for="serviceStatus">Service Status</label>
+                    <select id="serviceStatus" name="serviceStatus" class="form-control" required>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+              
+                <button type="submit">Submit</button> <button type="reset" class="clear-btn">Clear</button>
+            </form>
+        </div>
+
+        <h3>Service List</h3>
+        <table class="service-table">
+            <thead>
+                <tr>
+                    <th>Service ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Plumbing</td>
+                    <td>All kinds of plumbing services</td>
+                    <td>500</td>
+                    <td>Active</td>
+                    <td><button class="delete-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Cleaning</td>
+                    <td>Home cleaning services</td>
+                    <td>300</td>
+                    <td>Active</td>
+                    <td><button class="delete-btn">Delete</button></td>
+                </tr>
+                <!-- Add more services dynamically when backend is implemented -->
+            </tbody>
+        </table>
+    </div>
+
+    
+
+    <!-- Other content sections go here -->
+
+
+
+<!-- View Bookings Section -->
+<div id="viewBookingsContent" class="dynamic-content">
+    <h3>Bookings</h3>
+    
+    <!-- Tab Navigation -->
+    <div class="tab-container">
+        <button class="tab-btn" onclick="showTab('pending')">Pending</button>
+        <button class="tab-btn" onclick="showTab('inProgress')">In Progress</button>
+        <button class="tab-btn" onclick="showTab('completed')">Completed</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="pending" class="tab-content">
+        <!-- <h3>Pending Bookings</h3> -->
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Service</th>
+                    <th>Days</th>
+                    <th>Address</th>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Description</th>
+                    <th>Toatal Payment</th>
+                    <th>Assigned Employee</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Row -->
+                <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>Plumbing</td>
+                    <td>2</td>
+                    <td>123 Main Street</td>
+                    <td>12:00</td>
+                    <td>2 Hours</td>
+                    <td>abcdefjj</td>
+                    <td>500</td>
+                    <td>None</td>
+                    <td><button class="assign-btn" onclick="showAssignEmployeeModal(1)">Assign</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="inProgress" class="tab-content" style="display:none;">
+        <h3>In Progress Bookings</h3>
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Service</th>
+                    <th>days</th>
+                    <th>Address</th>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Description</th>
+                    <th>Total Payment</th>
+                    <th>Assigned Employee</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Row -->
+                <tr>
+                    <td>2</td>
+                    <td>Jane Smith</td>
+                    <td>Cleaning</td>
+                <td>2</td>
+                    <td>456 Oak Avenue</td>
+                    <td>12:00</td>
+                    <td>2 Hourse</td>
+                    <td>abcdefjj</td>
+                    <td>500</td>
+                    <td>Employee A</td>
+                    <td><button class="assign-btn">Update</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="completed" class="tab-content" style="display:none;">
+        <h3>Completed Bookings</h3>
+        <table class="employee-table">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Customer Name</th>
+                    <th>Service</th>
+                    <th>Days</th>
+                    <th>Address</th>
+                    <th>Time</th>
+                    <th>Duration</th>
+                    <th>Description</th>
+                    <th>Toatal Payment</th>
+                    <th>Assigned Employee</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example Row -->
+                <tr>
+                    <td>3</td>
+                    <td>Michael Brown</td>
+                    <td>Massage</td>
+                    <td>789 Pine Street</td>
+                    <td>2</td>
+                    <td>15:00</td>
+                    <td>2 Hourse</td>
+                    <td>abcdefjj</td>
+                    <td>500</td>
+                    <td>Employee B</td>
+                    <td>Excellent Service</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal to assign employee to service -->
+<div id="assignEmployeeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAssignEmployeeModal()">&times;</span>
+        <h3>Assign Employee to Service</h3>
+        <form action="AssignEmployeeServlet" method="post">
+            <div class="form-group">
+                <label for="bookingId">Booking ID</label>
+                <input type="text" id="bookingId" name="bookingId" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label for="employeeId">Select Employee</label>
+                <select id="employeeId" name="employeeId" class="form-control">
+                    <option value="1">Employee 1 - Plumber</option>
+                    <option value="2">Employee 2 - Cleaner</option>
+                    <!-- Add more employees dynamically when backend is implemented -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="serviceName">Service</label>
+                <input type="text" id="serviceName" name="serviceName" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label for="serviceAddress">Service Address</label>
+                <input type="text" id="serviceAddress" name="serviceAddress" class="form-control" readonly />
+            </div>
+            <button type="submit">Assign</button>
+        </form>
+    </div>
+</div>
+
+
+
+<div id="paymentManagementContent" class="dynamic-content">
+    <h3>Payment Management</h3>
+
+    <!-- Form to Input Payment Details -->
+    <form id="paymentForm">
+        <label for="paymentId">Payment ID:</label>
+        <input type="text" id="paymentId" name="paymentId" placeholder="Enter Payment ID" required><br><br>
+        
+        <label for="paymentDate">Payment Date:</label>
+        <input type="date" id="paymentDate" name="paymentDate" required><br><br>
+        
+        <label for="paymentMode">Payment Mode:</label>
+        <select id="paymentMode" name="paymentMode" required>
+            <option value="Online">Online</option>
+            <option value="Cash">Cash</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+        </select><br><br>
+        
+        <label for="employeeId">Employee ID:</label>
+        <input type="text" id="employeeId" name="employeeId" placeholder="Enter Employee ID" required><br><br>
+        
+        <label for="employeeName">Employee Name:</label>
+        <input type="text" id="employeeName" name="employeeName" placeholder="Enter Employee Name" required><br><br>
+        
+        <label for="completedTasks">Total Completed Services:</label>
+        <input type="number" id="completedTasks" name="completedTasks" placeholder="Enter Completed Services" required><br><br>
+        
+        <label for="amountPaid">Amount Paid:</label>
+        <input type="number" id="amountPaid" name="amountPaid" placeholder="Enter Amount Paid" required><br><br>
+        
+        <label for="paymentStatus">Payment Status:</label>
+        <select id="paymentStatus" name="paymentStatus" required>
+            <option value="Completed">Completed</option>
+            <option value="Pending">Pending</option>
+            <option value="Failed">Failed</option>
+        </select><br><br>
+        
+        <button type="submit" class="btn">Submit Payment</button>
+        <button type="reset" class="btn btn-clear">Clear</button>
+    </form>
+<br><br><br><br>
+    <h3>Payment Records</h3>
+
+    <!-- Filter Options -->
+    <div id="filterOptions">
+        <button onclick="showTable('all')">All</button>
+        <button onclick="showTable('Completed')">Completed</button>
+        <button onclick="showTable('Pending')">Pending</button>
+        <button onclick="showTable('Failed')">Failed</button>
+    </div> 
+
+    <!-- Payment Table -->
+    <table id="paymentTable">
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Payment Date</th>
+                <th>Mode</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Total Completed Services</th>
+                <th>Amount Paid</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-status="Completed">
+                <td>#PM001</td>
+                <td>01/14/2025</td>
+                <td>Online</td>
+                <td>EMP001</td>
+                <td>John Doe</td>
+                <td>10</td>
+                <td>$500</td>
+                <td>Completed</td>
+            </tr>
+            <tr data-status="Pending">
+                <td>#PM002</td>
+                <td>01/13/2025</td>
+                <td>Cash</td>
+                <td>EMP002</td>
+                <td>Jane Smith</td>
+                <td>15</td>
+                <td>$750</td>
+                <td>Pending</td>
+            </tr>
+            <tr data-status="Failed">
+                <td>#PM003</td>
+                <td>01/12/2025</td>
+                <td>Bank Transfer</td>
+                <td>EMP003</td>
+                <td>Emily Brown</td>
+                <td>20</td>
+                <td>$1000</td>
+                <td>Failed</td>
+            </tr>
+            <tr data-status="Completed">
+                <td>#PM004</td>
+                <td>01/11/2025</td>
+                <td>Online</td>
+                <td>EMP004</td>
+                <td>Mike Wilson</td>
+                <td>12</td>
+                <td>$600</td>
+                <td>Completed</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div id="handleComplaintsContent" class="dynamic-content">
+    <h3>Handle Complaints</h3>
+
+    <!-- Filter for Employee Complaints -->
+    <div>
+        <label for="employeeComplaintFilter">Filter by Status:</label>
+        <select id="employeeComplaintFilter">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="resolved">Resolved</option>
+        </select>
+    </div>
+
+    <!-- Employee Complaints Table -->
+    <h4>Employee Complaints</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Description</th>
+                <th>Contact No</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="pending">
+                <td>#C001</td>
+                <td>EMP001</td>
+                <td>John Doe</td>
+                <td>Complaint regarding service delay</td>
+                <td>847594524652</td>
+                <td>Pending</td>
+                <td><button class="status-btn">Mark Resolved</button></td>
+            </tr>
+            <tr class="resolved">
+                <td>#C002</td>
+                <td>EMP002</td>
+                <td>Jane Smith</td>
+                <td>Complaint about unsatisfactory cleaning</td>
+                <td>847594524652</td>
+                <td>Resolved</td>
+                <td><button class="status-btn" disabled>Already Resolved</button></td>
+            </tr>
+            <tr class="pending">
+                <td>#C003</td>
+                <td>EMP003</td>
+                <td>Emily Brown</td>
+                <td>Complaint about unprofessional behavior</td>
+                <td>847594524652</td>
+                <td>Pending</td>
+                <td><button class="status-btn">Mark Resolved</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Filter for Customer Complaints -->
+    <div>
+        <label for="customerComplaintFilter">Filter by Status:</label>
+        <select id="customerComplaintFilter">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="resolved">Resolved</option>
+        </select>
+    </div>
+
+    <!-- Customer Complaints Table -->
+    <h4>Customer Complaints</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Description</th>
+                <th>Contact No</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="resolved">
+                <td>#C002</td>
+                <td>EMP002</td>
+                <td>Jane Smith</td>
+                <td>Complaint about unsatisfactory cleaning</td>
+                <td>847594524652</td>
+                <td>Resolved</td>
+                <td><button class="status-btn" disabled>Already Resolved</button></td>
+            </tr>
+            <tr class="pending">
+                <td>#C004</td>
+                <td>EMP004</td>
+                <td>Michael Scott</td>
+                <td>Complaint about late arrival</td>
+                <td>847594524652</td>
+                <td>Pending</td>
+                <td><button class="status-btn">Mark Resolved</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--Report model -->
+
+
+<!-- Generate Report Section -->
+<!-- Generate Report Section -->
+<div id="generateReportSection" class="dynamic-content">
+    <h3>Generate Report</h3>
+    <div class="card">
+        <h3>Select Report Type</h3>
+        <form id="reportForm">
+            <div class="form-group">
+                <label for="serviceType">Report Type</label>
+                <select id="serviceType" name="serviceType" class="form-control" onchange="showServiceTable()" required>
+                    <option value="">Select a Report type</option>
+                    <option value="all">All</option>
+                    <option value="Contact">Contact</option>
+                    <option value="Job">Job</option>
+                    <option value="Services">Services</option>
+                    <option value="Employee">Employee</option>
+                    <option value="Employee Salary">Employee Salary</option>
+                    <option value="Complaints">Complaints</option>
+                    <option value="Feedback">Feedbacks</option>
+                    <option value="Users">Users</option>
+                    <option value="Bookings">Bookings</option>
+                    <option value="Bookings">Payment</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!-- Table Section (Initially hidden) -->
+    <div id="serviceReportSection" style="display: none;">
+        <h3>Service Report</h3>
+        <table class="service-report-table">
+            <thead>
+                <tr>
+                    <th>Service ID</th>
+                    <th>Service Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="serviceReportTableBody">
+                <!-- Dynamic data will be populated here -->
+            </tbody>
+        </table>
+        <button id="downloadReportButton" class="download-btn" onclick="downloadReport()">Download Report</button>
+    </div>
+</div>
+
+<!-- Contact Us Form Modal -->
+<div id="contactUsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3>Contact Us Form Details</h3>
+        
+        <!-- Contact Form Data -->
+        <div id="contactFormData">
+            <p><strong>Name:</strong> <span id="contactName"></span></p>
+            <p><strong>Contact No:</strong> <span id="contactNumber"></span></p>
+            <p><strong>Email ID:</strong> <span id="contactEmail"></span></p>
+            <p><strong>Description:</strong> <span id="contactDescription"></span></p>
+            <p><strong>Status:</strong> 
+                <select id="callbackStatus" onchange="updateStatus()">
+                    <option value="Pending">Pending</option>
+                    <option value="Callback Done">Callback Done</option>
+                    <option value="Callback Not Done">Callback Not Done</option>
+                </select>
+            </p>
+            <button onclick="moveToCompleted()" class="btn">Mark as Completed</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- View Contact Us Section -->
+<div id="viewContactUsContent" class="dynamic-content">
+    <h3>Contact Us Submissions</h3>
+    
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <label for="statusFilter">Filter by Status:</label>
+        <select id="statusFilter" class="form-control" onchange="filterByStatus()">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="inProgress">In Progress</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+    
+    <!-- Contact Us Table -->
+    <table id="contactUsTable" class="employee-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact Number</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Status</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example Row -->
+            <tr id="contactRow-1" class="pending">
+                <td>1</td>
+                <td>John Doe</td>
+                <td>123-456-7890</td>
+                <td>Inquiry about services</td>
+                <td>2025-01-15</td>
+                <td>
+                    <select class="status-dropdown" onchange="updateStatus(1)">
+                        <option value="pending" selected>Pending</option>
+                        <option value="inProgress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </td>
+               
+            </tr>
+            <!-- Add more rows here -->
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- View Contact Us Forms Section -->
+<div id="viewContactUsFormsContent" class="dynamic-content" style="display:none;">
+    <h3>View Contact Us Forms</h3>
+    
+    <!-- Status Filter Section -->
+    <div id="statusFilter">
+        <label for="statusFilterSelect">Filter by Status:</label>
+        <select id="statusFilterSelect" onchange="filterStatus()">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="inProgress">In Progress</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+    
+    <!-- Table for Contact Us Forms -->
+    <table id="contactUsTable" class="employee-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+                <th>Description</th>
+                <th>Status</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example Row -->
+            <tr id="contactUsRow1" class="pending">
+                <td>John Doe</td>
+                <td>1234567890</td>
+                <td>johndoe@example.com</td>
+                <td>Need assistance with plumbing</td>
+                <td>
+                    <select class="statusDropdown" onchange="changeStatus(this, 1)">
+                        <option value="pending" selected>Pending</option>
+                        <option value="inProgress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </td>
+             
+            </tr>
+            <tr id="contactUsRow2" class="inProgress">
+                <td>Jane Smith</td>
+                <td>0987654321</td>
+                <td>janesmith@example.com</td>
+                <td>Cleaning required</td>
+                <td>
+                    <select class="statusDropdown" onchange="changeStatus(this, 2)">
+                        <option value="pending">Pending</option>
+                        <option value="inProgress" selected>In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- View Applied Job Section -->
+<div id="viewAppliedJobContent" class="dynamic-content" style="display:none;">
+    <h3>View Applied Job</h3>
+
+    <!-- Status Filter Section -->
+    <div id="statusFilter">
+        <label for="statusFilterSelectJob">Filter by Status:</label>
+        <select id="statusFilterSelectJob" onchange="filterJobStatus()">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="interviewScheduled">Interview Scheduled</option>
+            <option value="hired">Hired</option>
+        </select>
+    </div>
+
+    <!-- Table for Applied Jobs -->
+    <table id="appliedJobTable" class="employee-table">
+        <thead>
+            <tr>
+                <th>Applicant Name</th>
+                <th>Contact Number</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>About</th>
+                <th>Status</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example Row -->
+            <tr id="appliedJobRow1" class="pending">
+                <td>John Doe</td>
+                <td>1234567890</td>
+                <td>johndoe@example.com</td>
+                <td>pune</td>
+                <td>Software Developer</td>
+                <td>
+                    <select class="statusDropdownJob" onchange="changeJobStatus(this, 1)">
+                        <option value="pending" selected>Pending</option>
+                        <option value="interviewScheduled">Interview Scheduled</option>
+                        <option value="hired">Hired</option>
+                    </select>
+                </td>
+                         </tr>
+            <tr id="appliedJobRow2" class="interviewScheduled">
+                <td>Jane Smith</td>
+                <td>0987654321</td>
+                <td>janesmith@example.com</td>
+                <td>pune</td>
+                <td>HR Manager</td>
+                <td>
+                    <select class="statusDropdownJob" onchange="changeJobStatus(this, 2)">
+                        <option value="pending">Pending</option>
+                        <option value="interviewScheduled" selected>Interview Scheduled</option>
+                        <option value="hired">Hired</option>
+                    </select>
+                </td>
+               
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+</div>
+<script>
+// Function to hide all content sections
+function hideAllContent() {
+    const sections = [
+        "welcomeMessage", "updateServicesContent", "manageEmployeesContent", 
+        "viewBookingsContent", "paymentManagementContent", "handleComplaintsContent",
+        "generateReportSection", "viewContactUsFormsContent" // This ensures the Contact Us section hides by default
+    ];
+    sections.forEach(function(sectionId) {
+        document.getElementById(sectionId).style.display = 'none';
+    });
+}
+
+// Sidebar click event handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Initially hide all sections except the Welcome message
+    hideAllContent();
+    document.getElementById("welcomeMessage").style.display = 'block';
+
+    // Sidebar click event handlers for each menu item
+    document.getElementById('updateServices').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("updateServicesContent").style.display = 'block';
+    });
+
+    document.getElementById('manageEmployees').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("manageEmployeesContent").style.display = 'block';
+    });
+
+    document.getElementById('viewBookings').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("viewBookingsContent").style.display = 'block';
+    });
+
+    document.getElementById('paymentManagement').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("paymentManagementContent").style.display = 'block';
+    });
+
+    document.getElementById('handleComplaints').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("handleComplaintsContent").style.display = 'block';
+    });
+
+    document.getElementById('viewReports').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById('generateReportSection').style.display = 'block';
+    });
+
+    // Add click event handler for the 'View Contact Us Forms' section
+    document.getElementById('viewContactUsForms').addEventListener('click', function() {
+        hideAllContent();  // Hide all sections
+        document.getElementById("viewContactUsFormsContent").style.display = 'block';  // Show only Contact Us section with table
+    });
+});
+
+
+    
+// Function to show Contact Us Form submissions in the table
+document.getElementById('viewContactUsForms').addEventListener('click', function() {
+    // Hide all sections and show Contact Us Forms section
+    hideAllContent();
+    document.getElementById("viewContactUsFormsContent").style.display = 'block';
+});
+
+// Example data for Contact Us submissions (this can be dynamically fetched)
+const contactUsData = [
+    {id: 1, name: "John Doe", contactNumber: "123-456-7890", description: "Inquiry about services", date: "2025-01-15", status: "Pending"},
+    {id: 2, name: "Jane Smith", contactNumber: "987-654-3210", description: "Question about pricing", date: "2025-01-14", status: "In Progress"}
+];
+
+// Function to load the Contact Us data into the table
+function loadContactUsTable() {
+    const contactUsTable = document.getElementById("contactUsTable").getElementsByTagName("tbody")[0];
+    contactUsTable.innerHTML = ''; // Clear existing table rows
+
+    contactUsData.forEach(function(contact) {
+        const row = document.createElement("tr");
+
+        const idCell = document.createElement("td");
+        idCell.textContent = contact.id;
+        row.appendChild(idCell);
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = contact.name;
+        row.appendChild(nameCell);
+
+        const contactCell = document.createElement("td");
+        contactCell.textContent = contact.contactNumber;
+        row.appendChild(contactCell);
+
+        const descriptionCell = document.createElement("td");
+        descriptionCell.textContent = contact.description;
+        row.appendChild(descriptionCell);
+
+        const dateCell = document.createElement("td");
+        dateCell.textContent = contact.date;
+        row.appendChild(dateCell);
+
+        const statusCell = document.createElement("td");
+        statusCell.textContent = contact.status;
+        row.appendChild(statusCell);
+
+        const actionCell = document.createElement("td");
+        const viewButton = document.createElement("button");
+        viewButton.textContent = "View";
+        viewButton.classList.add("view-btn");
+        viewButton.onclick = function() {
+            viewContactUsDetails(contact.id);
+        };
+        actionCell.appendChild(viewButton);
+        row.appendChild(actionCell);
+
+        contactUsTable.appendChild(row);
+    });
+}
+
+// Function to view Contact Us details in a modal
+function viewContactUsDetails(contactId) {
+    // Fetch the contact data (this could be from a database in a real-world app)
+    const contact = contactUsData.find(contact => contact.id === contactId);
+
+    // Populate modal with contact data
+    document.getElementById("contactId").value = contact.id;
+    document.getElementById("contactName").value = contact.name;
+    document.getElementById("contactNumber").value = contact.contactNumber;
+    document.getElementById("contactDescription").value = contact.description;
+    document.getElementById("contactDate").value = contact.date;
+    document.getElementById("contactStatus").value = contact.status;
+
+    // Show the modal
+    document.getElementById("contactUsModal").style.display = "block";
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById("contactUsModal").style.display = "none";
+}
+
+// Load the Contact Us table on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadContactUsTable();
+});
+
+
+
+
+
+
+
+    // Handle the form submission for Contact Us form
+    function submitContactForm(e) {
+        e.preventDefault(); // Prevent the form from refreshing the page
+    
+        // Get form values
+        const contactName = document.getElementById("contactName").value;
+        const contactNumber = document.getElementById("contactNumber").value;
+        const contactEmail = document.getElementById("contactEmail").value;
+        const contactDescription = document.getElementById("contactDescription").value;
+    
+        if (!contactName || !contactNumber || !contactEmail || !contactDescription) {
+            alert("Please fill all the fields.");
+            return;
+        }
+    
+        // Add the submitted data to the table (for demo purposes)
+        const contactUsTable = document.getElementById("contactUsTable").getElementsByTagName("tbody")[0];
+        const row = document.createElement("tr");
+    
+        const nameCell = document.createElement("td");
+        nameCell.textContent = contactName;
+        row.appendChild(nameCell);
+    
+        const contactCell = document.createElement("td");
+        contactCell.textContent = contactNumber;
+        row.appendChild(contactCell);
+    
+        const emailCell = document.createElement("td");
+        emailCell.textContent = contactEmail;
+        row.appendChild(emailCell);
+    
+        const descriptionCell = document.createElement("td");
+        descriptionCell.textContent = contactDescription;
+        row.appendChild(descriptionCell);
+    
+        contactUsTable.appendChild(row);
+    
+        // Reset the form after submission
+        document.getElementById("contactForm").reset();
+    }
+    
+    // Function to hide all content sections
+    function hideAllContent() {
+        const sections = [
+            "welcomeMessage", "updateServicesContent", "manageEmployeesContent", 
+            "viewBookingsContent", "paymentManagementContent", "handleComplaintsContent",
+            "generateReportSection"
+        ];
+        sections.forEach(function(sectionId) {
+            document.getElementById(sectionId).style.display = 'none';
+        });
+    }
+    
+    // Sidebar click event handlers
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initially hide all sections except the Welcome message
+        hideAllContent();
+        document.getElementById("welcomeMessage").style.display = 'block';
+    
+        // Sidebar click event handlers for each menu item
+        document.getElementById('updateServices').addEventListener('click', function() {
+            hideAllContent();
+            document.getElementById("updateServicesContent").style.display = 'block';
+        });
+    
+        document.getElementById('manageEmployees').addEventListener('click', function() {
+            hideAllContent();
+            document.getElementById("manageEmployeesContent").style.display = 'block';
+        });
+    
+        document.getElementById('viewBookings').addEventListener('click', function() {
+            hideAllContent();
+            document.getElementById("viewBookingsContent").style.display = 'block';
+        });
+    
+        document.getElementById('paymentManagement').addEventListener('click', function() {
+            hideAllContent();
+            document.getElementById("paymentManagementContent").style.display = 'block';
+        });
+    
+        document.getElementById('handleComplaints').addEventListener('click', function() {
+            hideAllContent();
+            document.getElementById("handleComplaintsContent").style.display = 'block';
+        });
+    
+        document.getElementById('viewReports').addEventListener('click', function() {
+            hideAllContent();
+            document.getElementById('generateReportSection').style.display = 'block';
+        });
+    });
+    
+    // Show the modal with relevant data
+    function showAssignEmployeeModal(bookingId) {
+        // Fetch booking data (in a real scenario, this would come from the backend)
+        var bookingData = {
+            1: {service: "Plumbing", address: "123 Main Street"},
+            2: {service: "Cleaning", address: "456 Oak Avenue"}
+        };
+    
+        var booking = bookingData[bookingId];
+    
+        // Populate the modal with booking data
+        document.getElementById('bookingId').value = bookingId;
+        document.getElementById('serviceName').value = booking.service;
+        document.getElementById('serviceAddress').value = booking.address;
+    
+        // Show the modal
+        document.getElementById('assignEmployeeModal').style.display = 'block';
+    }
+    
+    // Update booking status
+    function updateBookingStatus(bookingId) {
+        var status = document.querySelector(`#booking-table-row-${bookingId} select`).value;
+        // Update status in your database or backend here
+        console.log('Updated status for booking ' + bookingId + ': ' + status);
+    }
+    
+    // Close the modal
+    function closeAssignEmployeeModal() {
+        document.getElementById('assignEmployeeModal').style.display = 'none';
+    }
+    
+    // Function to toggle additional fields for service update
+    function toggleFields() {
+        var action = document.getElementById('serviceAction').value;
+        if(action === 'update' || action === 'delete') {
+            document.getElementById('serviceIdDiv').style.display = 'block';
+        } else {
+            document.getElementById('serviceIdDiv').style.display = 'none';
+        }
+    }
+
+
+    // Function to show the selected tab
+function showTab(tabId) {
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabContents.forEach(tab => {
+        tab.style.display = 'none';
+    });
+
+    // Show the selected tab content
+    document.getElementById(tabId).style.display = 'block';
+
+    // Update active tab button (optional styling)
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+}
+
+// Function to hide all content sections
+function hideAllContent() {
+    const sections = [
+        "welcomeMessage", "updateServicesContent", "manageEmployeesContent", 
+        "viewBookingsContent", "paymentManagementContent", "handleComplaintsContent",
+        "generateReportSection", "viewContactUsFormsContent"  // Add Contact Us Form content here
+    ];
+    sections.forEach(function(sectionId) {
+        document.getElementById(sectionId).style.display = 'none';
+    });
+}
+
+// Sidebar click event handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Initially hide all sections except the Welcome message
+    hideAllContent();
+    document.getElementById("welcomeMessage").style.display = 'block';
+
+    // Sidebar click event handlers for each menu item
+    document.getElementById('updateServices').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("updateServicesContent").style.display = 'block';
+    });
+
+    document.getElementById('manageEmployees').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("manageEmployeesContent").style.display = 'block';
+    });
+
+    document.getElementById('viewBookings').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("viewBookingsContent").style.display = 'block';
+    });
+
+    document.getElementById('paymentManagement').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("paymentManagementContent").style.display = 'block';
+    });
+
+    document.getElementById('handleComplaints').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("handleComplaintsContent").style.display = 'block';
+    });
+
+    document.getElementById('viewReports').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById('generateReportSection').style.display = 'block';
+    });
+
+    // Add click event handler for the 'View Contact Us Forms' section
+    document.getElementById('viewContactUsForms').addEventListener('click', function() {
+        hideAllContent();  // Hide all sections
+        document.getElementById("viewContactUsFormsContent").style.display = 'block';  // Show only Contact Us section with table
+    });
+});
+// Function to change the status of a row
+function changeStatus(select, rowId) {
+    const status = select.value; // Get the selected status
+    const row = document.getElementById('contactUsRow' + rowId);
+    
+    // Remove the old status class (pending, inProgress, or completed)
+    row.classList.remove('pending', 'inProgress', 'completed');
+    
+    // Add the new class based on the selected status
+    row.classList.add(status);
+    
+    // Disable the dropdown and action button if the status is 'Completed'
+    const actionButton = row.querySelector('.action-btn');
+    if (status === 'completed') {
+        // Disable the dropdown
+        select.disabled = true;
+        // Disable the action button
+        actionButton.disabled = true;
+    } else {
+        // Enable the dropdown and action button for other statuses
+        select.disabled = false;
+        actionButton.disabled = false;
+    }
+}
+
+// Function to filter the rows by status
+function filterStatus() {
+    const filterValue = document.getElementById('statusFilterSelect').value;
+    const rows = document.querySelectorAll('#contactUsTable tbody tr');
+    
+    rows.forEach(row => {
+        // Show all rows if "all" is selected
+        if (filterValue === 'all') {
+            row.style.display = '';
+        } else {
+            // Hide rows that don't match the selected status
+            if (!row.classList.contains(filterValue)) {
+                row.style.display = 'none';
+            } else {
+                row.style.display = '';
+            }
+        }
+    });
+}
+
+// Function to perform action on the row
+function takeAction(rowId) {
+    const row = document.getElementById('contactUsRow' + rowId);
+    const statusDropdown = row.querySelector('.statusDropdown');
+    const status = statusDropdown.value;
+    
+    if (status === 'completed') {
+        alert("No action allowed for completed tasks.");
+    } else {
+        alert("Action taken on " + rowId);
+    }
+}
+
+// Sidebar click event handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Initially hide all sections except the Welcome message
+    hideAllContent();
+    document.getElementById("welcomeMessage").style.display = 'block';
+
+    // Sidebar click event handlers for each menu item
+    document.getElementById('updateServices').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("updateServicesContent").style.display = 'block';
+    });
+
+    document.getElementById('manageEmployees').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("manageEmployeesContent").style.display = 'block';
+    });
+
+    document.getElementById('viewBookings').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("viewBookingsContent").style.display = 'block';
+    });
+
+    document.getElementById('paymentManagement').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("paymentManagementContent").style.display = 'block';
+    });
+
+    document.getElementById('handleComplaints').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("handleComplaintsContent").style.display = 'block';
+    });
+
+    // Add event listener for the "View Applied Job" link
+    document.getElementById('viewAppliedJob').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("viewAppliedJobContent").style.display = 'block';
+    });
+
+    document.getElementById('viewReports').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById('generateReportSection').style.display = 'block';
+    });
+});
+
+// Function to hide all content sections
+function hideAllContent() {
+    const sections = [
+        "welcomeMessage", "updateServicesContent", "manageEmployeesContent", 
+        "viewBookingsContent", "paymentManagementContent", "handleComplaintsContent",
+        "generateReportSection", "viewAppliedJobContent"
+    ];
+    sections.forEach(function(sectionId) {
+        document.getElementById(sectionId).style.display = 'none';
+    });
+}
+// Function to hide all content sections
+function hideAllContent() {
+    const sections = [
+        "welcomeMessage", "updateServicesContent", "manageEmployeesContent", 
+        "viewBookingsContent", "paymentManagementContent", "handleComplaintsContent",
+        "generateReportSection", "viewAppliedJobContent", "viewContactUsFormsContent"
+    ];
+    sections.forEach(function(sectionId) {
+        document.getElementById(sectionId).style.display = 'none';
+    });
+}
+
+// Sidebar click event handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Initially hide all sections except the Welcome message
+    hideAllContent();
+    document.getElementById("welcomeMessage").style.display = 'block';
+
+    // Sidebar click event handlers for each menu item
+    document.getElementById('updateServices').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("updateServicesContent").style.display = 'block';
+    });
+
+    document.getElementById('manageEmployees').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("manageEmployeesContent").style.display = 'block';
+    });
+
+    document.getElementById('viewBookings').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("viewBookingsContent").style.display = 'block';
+    });
+
+    document.getElementById('paymentManagement').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("paymentManagementContent").style.display = 'block';
+    });
+
+    document.getElementById('handleComplaints').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("handleComplaintsContent").style.display = 'block';
+    });
+
+    // Add event listener for the "View Contact Us Forms" link
+    document.getElementById('viewContactUsForms').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById("viewContactUsFormsContent").style.display = 'block';
+    });
+
+    document.getElementById('viewReports').addEventListener('click', function() {
+        hideAllContent();
+        document.getElementById('generateReportSection').style.display = 'block';
+    });
+});
+
+    </script>
+    
+</body>
+</html>
